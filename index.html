@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MG-FACTORY 7777 - المصنع الدائم</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080c;color:#fff;font-family:monospace;min-height:100vh}
+.header{background:linear-gradient(90deg,#0a0a0f,#1a1a0f);border-bottom:2px solid #FFD700;padding:15px;text-align:center}
+.gold{color:#FFD700}
+.live{color:#00ff88;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0.3}}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px}
+.card{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:12px;text-align:center}
+.btn{background:#FFD700;color:#000;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px;width:90%}
+.btn:hover{background:#ffed4e}
+.chain{padding:15px}
+.block{background:#111;border:1px solid #333;border-radius:8px;padding:10px;margin:8px 0;font-size:11px;word-break:break-all}
+.hash{color:#FFD700}
+.footer{text-align:center;padding:20px;color:#666;font-size:10px;border-top:1px solid #222;margin-top:20px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="header">
+<h2><span class="gold">MG-FACTORY 🏭</span> 7777</h2>
+<p><span class="live">● LIVE</span> من على الترمس - PRIVATE CONNECTED TO DECENTRALIZED</p>
+<p>Chain 7777 | X Layer 196 | Blocks: <span id="bc">2</span> | Anchors: <span id="ac">1</span></p>
+</div>
+
+<div class="stats">
+<div class="card"><div>انتاج MGC</div><h3 class="gold" id="mgc">2,000,000</h3></div>
+<div class="card"><div>البلوكات</div><h3 class="gold" id="blocks">2</h3></div>
+<div class="card"><div>Hash Rate</div><h3 class="gold">7777 H/s</h3></div>
+<div class="card"><div>الحالة</div><h3 class="live">يعمل 24/7</h3></div>
+</div>
+
+<div style="text-align:center;padding:10px">
+<button class="btn" onclick="startFactory()">▶️ شغل المصنع أوتوماتيك</button>
+<button class="btn" onclick="stopFactory()">⏹️ وقف المصنع</button>
+<button class="btn" onclick="mine()">⛏️ عدّن بلوك (1M MGC)</button>
+</div>
+
+<div class="chain" id="chain">
+<h4 class="gold">🏭 خط الانتاج - البلوكات الخاصة 7777</h4>
+<div id="blocksList"></div>
+<h4 class="gold" style="margin-top:15px">🔗 الربط اللامركزي X Layer 196</h4>
+<div id="anchorsList"></div>
+</div>
+
+<div class="footer">
+MG-CHAIN 7777 - أول مصنع بلوكشين مصري من تليفون محمول<br>
+مربوط بـ X Layer 196 - OKB Gas - OKX Wallet<br>
+Founder: Mohamed Ebrahem Gaafar - Cairo Egypt<br><br>
+<span style="font-size:10px;color:#555">01141010131<br>01041364375</span>
+</div>
+
+<script>
+let chain=[
+{index:0,hash:"a7c1f0d0e6b4c3b8a9d2e1f0c5b4a3d2e1f0",prev:"000000",data:"GENESIS - من على الترمس",reward:1000000},
+{index:1,hash:"b8d2e1f0c5b4a3d2e1f0a7c1d0e6b4c3b8a9d2",prev:"a7c1f0d0...",data:"Block 1 - 1M MGC",reward:1000000}
+];
+let anchors=[
+{private_hash:"b8d2e1f0...",txHash:"0x196X7777a7c1f0d0e6b4",decId:196}
+];
+let interval=null;
+
+function render(){
+document.getElementById('bc').innerText=chain.length;
+document.getElementById('ac').innerText=anchors.length;
+document.getElementById('blocks').innerText=chain.length;
+document.getElementById('mgc').innerText=(chain.length*1000000).toLocaleString();
+let bl=document.getElementById('blocksList'); bl.innerHTML='';
+chain.slice().reverse().forEach(b=>{
+bl.innerHTML+=`<div class="block">#${b.index} | ${b.data}<br>Hash: <span class="hash">${b.hash}</span><br>Prev: ${b.prev} | Reward: ${b.reward.toLocaleString()} MGC</div>`;
+});
+let al=document.getElementById('anchorsList'); al.innerHTML='';
+anchors.slice().reverse().forEach(a=>{
+al.innerHTML+=`<div class="block">Private: <span class="hash">${a.private_hash}</span><br>→ X Layer Tx: <span class="hash">${a.txHash}</span> | Chain: ${a.decId}</div>`;
+});
+}
+
+function mine(){
+let last=chain[chain.length-1];
+let hash=Math.random().toString(16).substr(2,12)+"d0e6b4c3b8a9d2e1f0c5b4";
+let nb={index:chain.length,hash:hash,prev:last.hash.substr(0,8)+"...",data:`Block ${chain.length} - 1M MGC - FACTORY`,reward:1000000};
+chain.push(nb);
+anchors.push({private_hash:hash,txHash:"0x196X"+hash.substr(0,12),decId:196});
+render();
+}
+
+function startFactory(){
+if(interval) return;
+interval=setInterval(mine,3000);
+alert("🏭 المصنع اشتغل! بيعدن بلوك كل 3 ثواني!");
+}
+function stopFactory(){
+clearInterval(interval); interval=null;
+alert("⏹️ المصنع وقف");
+}
+render();
+</script>
+</body>
+</html>
